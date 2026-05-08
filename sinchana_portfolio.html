@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sinchana Praveen — Data Analytics & Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:        #0c0b14;
+  --bg2:       #100f1c;
+  --bg3:       #15131f;
+  --text:      #ede9f8;
+  --text2:     #9d97b8;
+  --text3:     #4e4a6a;
+  --purple:    #a78bfa;
+  --purple2:   #c4b5fd;
+  --purple3:   rgba(167,139,250,0.12);
+  --purple4:   rgba(167,139,250,0.06);
+  --blue:      #818cf8;
+  --blue2:     rgba(129,140,248,0.1);
+  --rose:      #f9a8d4;
+  --border:    rgba(167,139,250,0.1);
+  --border2:   rgba(167,139,250,0.18);
+  --border3:   rgba(255,255,255,0.06);
+  --glass:     rgba(255,255,255,0.03);
+  --glass2:    rgba(255,255,255,0.05);
+  --serif:     'Instrument Serif', Georgia, serif;
+  --sans:      'Inter', sans-serif;
+  --mono:      'JetBrains Mono', monospace;
+}
+
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:15px;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+::selection{background:rgba(167,139,250,0.3);color:var(--text)}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(167,139,250,0.3);border-radius:2px}
+
+/* ── AMBIENT ORBS (fixed, behind everything) ── */
+.orb{
+  position:fixed;border-radius:50%;
+  pointer-events:none;z-index:0;
+  filter:blur(80px);
+}
+.orb1{
+  width:600px;height:600px;
+  top:-100px;left:-150px;
+  background:radial-gradient(circle,rgba(139,92,246,0.18) 0%,transparent 70%);
+  animation:drift1 18s ease-in-out infinite alternate;
+}
+.orb2{
+  width:500px;height:500px;
+  top:30%;right:-100px;
+  background:radial-gradient(circle,rgba(99,102,241,0.14) 0%,transparent 70%);
+  animation:drift2 22s ease-in-out infinite alternate;
+}
+.orb3{
+  width:400px;height:400px;
+  bottom:10%;left:20%;
+  background:radial-gradient(circle,rgba(167,139,250,0.1) 0%,transparent 70%);
+  animation:drift3 26s ease-in-out infinite alternate;
+}
+@keyframes drift1{from{transform:translate(0,0)}to{transform:translate(60px,40px)}}
+@keyframes drift2{from{transform:translate(0,0)}to{transform:translate(-40px,60px)}}
+@keyframes drift3{from{transform:translate(0,0)}to{transform:translate(30px,-50px)}}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 52px;height:60px;
+  background:rgba(12,11,20,0.7);
+  backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:var(--serif);font-size:18px;
+  font-style:italic;color:var(--text);
+  text-decoration:none;letter-spacing:0.01em;
+}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-links a{
+  font-size:13px;color:var(--text2);
+  text-decoration:none;transition:color 0.2s;
+  letter-spacing:0.01em;
+}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{
+  font-size:12px;padding:8px 22px;
+  border-radius:100px;
+  border:1px solid var(--border2);
+  background:var(--purple3);
+  color:var(--purple2);
+  cursor:pointer;transition:all 0.25s;
+  text-decoration:none;display:inline-block;
+  backdrop-filter:blur(8px);
+}
+.nav-cta:hover{background:rgba(167,139,250,0.2);border-color:rgba(167,139,250,0.35);color:var(--text)}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  padding:130px 52px 0;
+  position:relative;
+  display:flex;flex-direction:column;
+  border-bottom:1px solid var(--border);
+  z-index:1;
+}
+.hero-main{flex:1;display:flex;flex-direction:column;justify-content:center;max-width:720px}
+
+.hero-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;color:var(--purple2);
+  border:1px solid var(--border2);
+  padding:6px 16px;border-radius:100px;
+  background:var(--purple4);
+  backdrop-filter:blur(8px);
+  margin-bottom:32px;width:fit-content;
+  letter-spacing:0.02em;
+}
+.hero-pill-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--purple);
+  box-shadow:0 0 6px var(--purple);
+  animation:pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
+
+.hero-name{
+  font-family:var(--serif);
+  font-size:clamp(3.5rem,7vw,6.5rem);
+  font-weight:400;line-height:1.0;
+  letter-spacing:-0.01em;
+  color:var(--text);
+  margin-bottom:4px;
+}
+.hero-name-italic{
+  font-style:italic;
+  background:linear-gradient(135deg,var(--purple2) 0%,var(--blue) 50%,var(--rose) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.hero-role{
+  font-size:13px;color:var(--text3);
+  letter-spacing:0.08em;text-transform:uppercase;
+  font-family:var(--mono);font-weight:300;
+  margin:20px 0 24px;
+  display:flex;align-items:center;gap:12px;
+}
+.hero-role-line{width:28px;height:1px;background:var(--border2)}
+
+.hero-desc{
+  font-size:16px;color:var(--text2);
+  max-width:480px;line-height:1.75;
+  font-weight:300;margin-bottom:40px;
+}
+
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:72px}
+.btn-glass{
+  font-size:13px;padding:12px 28px;border-radius:100px;
+  border:1px solid var(--border2);
+  background:var(--glass2);
+  color:var(--text2);cursor:pointer;
+  transition:all 0.25s;text-decoration:none;
+  display:inline-block;backdrop-filter:blur(12px);
+  letter-spacing:0.01em;
+}
+.btn-glass:hover{background:rgba(255,255,255,0.08);color:var(--text);border-color:rgba(255,255,255,0.15)}
+.btn-glass-purple{
+  background:var(--purple3);
+  border-color:var(--border2);
+  color:var(--purple2);
+}
+.btn-glass-purple:hover{background:rgba(167,139,250,0.2);color:var(--text);border-color:rgba(167,139,250,0.3)}
+
+/* stats row */
+.hero-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--border);
+}
+.hero-stat{
+  padding:28px 0;
+  border-right:1px solid var(--border);
+  position:relative;
+}
+.hero-stat:last-child{border-right:none}
+.hero-stat::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(167,139,250,0.4),transparent);
+  opacity:0;transition:opacity 0.3s;
+}
+.hero-stat:hover::before{opacity:1}
+.stat-num{
+  font-family:var(--serif);font-size:3rem;
+  color:var(--text);line-height:1;
+  font-style:italic;letter-spacing:-0.02em;
+}
+.stat-num em{font-style:normal;font-size:1.8rem;color:var(--purple)}
+.stat-lbl{font-size:11px;color:var(--text3);margin-top:6px;font-family:var(--mono);font-weight:300;letter-spacing:0.06em}
+
+/* ── MARQUEE ── */
+.marquee-wrap{
+  overflow:hidden;padding:14px 0;
+  background:rgba(16,15,28,0.8);
+  border-bottom:1px solid var(--border);
+  position:relative;z-index:1;
+}
+.marquee-fade-l,.marquee-fade-r{
+  position:absolute;top:0;bottom:0;z-index:2;width:100px;pointer-events:none;
+}
+.marquee-fade-l{left:0;background:linear-gradient(90deg,var(--bg2),transparent)}
+.marquee-fade-r{right:0;background:linear-gradient(-90deg,var(--bg2),transparent)}
+.marquee-track{
+  display:flex;width:max-content;
+  animation:marquee 32s linear infinite;
+}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee-item{
+  font-family:var(--mono);font-size:11px;
+  color:var(--text3);white-space:nowrap;
+  padding:0 28px;letter-spacing:0.08em;
+}
+.marquee-item.lit{color:rgba(167,139,250,0.6)}
+.msep{color:rgba(167,139,250,0.3);margin:0 4px}
+
+/* ── SECTION ── */
+.section{
+  padding:88px 52px;
+  border-bottom:1px solid var(--border);
+  position:relative;z-index:1;
+}
+.section-kicker{
+  font-family:var(--mono);font-size:11px;
+  color:var(--purple);letter-spacing:0.14em;
+  text-transform:uppercase;font-weight:300;
+  margin-bottom:10px;display:flex;align-items:center;gap:10px;
+}
+.section-kicker::before{content:'';width:20px;height:1px;background:var(--purple);opacity:0.5}
+.section-title{
+  font-family:var(--serif);
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:400;color:var(--text);
+  letter-spacing:-0.01em;line-height:1.1;
+  margin-bottom:52px;
+}
+.section-title em{font-style:italic;color:var(--purple2)}
+
+/* ── PROJECTS ── */
+.proj-list{display:flex;flex-direction:column;gap:0}
+.proj-row{
+  display:grid;grid-template-columns:56px 1fr 48px;
+  gap:28px;align-items:start;
+  padding:32px 24px;
+  border:1px solid transparent;
+  border-top:1px solid var(--border);
+  text-decoration:none;
+  transition:all 0.3s;
+  border-radius:0;
+  position:relative;
+  cursor:pointer;
+}
+.proj-row::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--purple4),var(--blue2),transparent);
+  opacity:0;transition:opacity 0.3s;border-radius:12px;
+}
+.proj-row:hover{border-color:var(--border2);border-radius:12px;margin:0 -12px;padding:32px 36px}
+.proj-row:hover::before{opacity:1}
+.proj-row:hover .proj-arrow{opacity:1;transform:translate(3px,-3px)}
+.proj-row:hover .proj-num{color:var(--purple)}
+
+.proj-num{
+  font-family:var(--serif);font-size:13px;
+  font-style:italic;color:var(--text3);
+  transition:color 0.2s;padding-top:2px;
+  position:relative;z-index:1;
+}
+.proj-body{display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
+.proj-title{
+  font-size:16px;font-weight:500;color:var(--text);
+  letter-spacing:-0.01em;
+}
+.proj-desc{font-size:13px;color:var(--text2);line-height:1.7;max-width:600px}
+.proj-tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{
+  font-size:11px;font-family:var(--mono);font-weight:300;
+  padding:4px 12px;border-radius:100px;
+  border:1px solid var(--border);color:var(--text3);
+  background:var(--glass);letter-spacing:0.04em;
+}
+.tag-p{border-color:var(--border2);color:var(--purple2);background:var(--purple4)}
+.tag-b{border-color:rgba(129,140,248,0.2);color:var(--blue);background:rgba(129,140,248,0.06)}
+.proj-metric{
+  font-family:var(--mono);font-size:11px;
+  color:rgba(167,139,250,0.5);letter-spacing:0.04em;
+  font-weight:300;
+}
+.proj-arrow{
+  font-size:18px;color:var(--purple2);opacity:0;
+  transition:all 0.25s;position:relative;z-index:1;
+  align-self:start;
+}
+
+/* ── EXPERIENCE ── */
+.exp-list{display:flex;flex-direction:column}
+.exp-item{
+  display:grid;grid-template-columns:180px 1fr;
+  gap:48px;padding:40px 0;
+  border-top:1px solid var(--border);
+}
+.exp-left{display:flex;flex-direction:column;gap:10px}
+.exp-period{
+  font-family:var(--mono);font-size:11px;
+  color:var(--text3);letter-spacing:0.06em;
+  line-height:1.8;font-weight:300;
+}
+.exp-badge{
+  display:inline-block;font-size:11px;
+  padding:4px 14px;border-radius:100px;
+  border:1px solid var(--border2);
+  color:var(--purple2);background:var(--purple4);
+  width:fit-content;font-family:var(--mono);font-weight:300;
+  letter-spacing:0.04em;
+}
+.exp-role{
+  font-size:16px;font-weight:500;color:var(--text);
+  letter-spacing:-0.01em;margin-bottom:4px;
+}
+.exp-company{
+  font-family:var(--mono);font-size:11px;
+  color:var(--purple);letter-spacing:0.04em;
+  font-weight:300;margin-bottom:18px;
+}
+.exp-bullets{list-style:none;display:flex;flex-direction:column;gap:10px}
+.exp-bullets li{
+  font-size:13px;color:var(--text2);
+  line-height:1.65;padding-left:18px;position:relative;
+}
+.exp-bullets li::before{
+  content:'';position:absolute;
+  left:0;top:9px;
+  width:5px;height:5px;border-radius:50%;
+  background:rgba(167,139,250,0.35);
+}
+
+/* ── SKILLS ── */
+.skills-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+.skill-glass{
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:16px;padding:28px;
+  backdrop-filter:blur(12px);
+  transition:all 0.25s;position:relative;overflow:hidden;
+}
+.skill-glass::before{
+  content:'';position:absolute;inset:0;border-radius:16px;
+  background:linear-gradient(135deg,var(--purple4),transparent);
+  opacity:0;transition:opacity 0.3s;
+}
+.skill-glass:hover{border-color:var(--border2)}
+.skill-glass:hover::before{opacity:1}
+.skill-cat{
+  font-family:var(--mono);font-size:10px;
+  color:var(--purple);letter-spacing:0.14em;
+  text-transform:uppercase;font-weight:300;
+  margin-bottom:18px;position:relative;z-index:1;
+}
+.skill-items{display:flex;flex-direction:column;gap:9px;position:relative;z-index:1}
+.skill-items span{
+  font-size:13px;color:var(--text2);font-weight:300;
+  display:flex;align-items:center;gap:8px;
+}
+.skill-items span::before{
+  content:'';width:3px;height:3px;border-radius:50%;
+  background:var(--purple);opacity:0.5;flex-shrink:0;
+}
+
+/* ── CERTS ── */
+.certs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.cert-glass{
+  background:var(--glass);border:1px solid var(--border);
+  border-radius:16px;padding:24px;
+  text-decoration:none;
+  transition:all 0.25s;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;gap:14px;
+}
+.cert-glass::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--purple),transparent);
+  opacity:0;transition:opacity 0.3s;
+}
+.cert-glass:hover{border-color:var(--border2);background:var(--glass2)}
+.cert-glass:hover::before{opacity:1}
+.cert-top{display:flex;justify-content:space-between;align-items:center}
+.cert-icon{
+  width:40px;height:40px;border-radius:12px;
+  background:var(--purple3);
+  border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+}
+.cert-verify{
+  font-family:var(--mono);font-size:10px;
+  color:var(--purple2);letter-spacing:0.06em;
+  font-weight:300;
+}
+.cert-name{font-size:13px;font-weight:500;color:var(--text);line-height:1.4}
+.cert-issuer{
+  font-family:var(--mono);font-size:10px;
+  color:var(--text3);letter-spacing:0.04em;font-weight:300;
+}
+
+/* ── ABOUT ── */
+.about-wrap{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+}
+.about-headline{
+  font-family:var(--serif);
+  font-size:clamp(2.2rem,4vw,3.5rem);
+  font-weight:400;line-height:1.15;
+  color:var(--text);letter-spacing:-0.01em;
+}
+.about-headline em{
+  font-style:italic;
+  background:linear-gradient(135deg,var(--purple2),var(--blue));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.about-right{display:flex;flex-direction:column;gap:22px}
+.about-para{font-size:14px;color:var(--text2);line-height:1.8;font-weight:300}
+.about-contact-card{
+  background:var(--glass);
+  border:1px solid var(--border2);
+  border-radius:16px;padding:20px 24px;
+  backdrop-filter:blur(12px);
+}
+.about-contact-label{
+  font-family:var(--mono);font-size:10px;
+  color:var(--purple);letter-spacing:0.12em;
+  text-transform:uppercase;font-weight:300;
+  margin-bottom:8px;
+}
+.about-contact-email{
+  font-size:15px;color:var(--text);font-weight:400;
+  margin-bottom:4px;
+}
+.about-contact-rest{
+  font-family:var(--mono);font-size:11px;
+  color:var(--text3);letter-spacing:0.04em;font-weight:300;
+}
+.about-links{display:flex;gap:8px;flex-wrap:wrap}
+.link-pill{
+  font-size:12px;padding:9px 20px;border-radius:100px;
+  border:1px solid var(--border2);color:var(--text2);
+  text-decoration:none;transition:all 0.2s;
+  background:var(--glass);backdrop-filter:blur(8px);
+}
+.link-pill:hover{border-color:var(--border2);color:var(--purple2);background:var(--purple4)}
+
+/* ── TICKER ── */
+.ticker-wrap{
+  overflow:hidden;padding:14px 0;
+  background:rgba(12,11,20,0.8);
+  border-top:1px solid var(--border);
+  position:relative;z-index:1;
+}
+.ticker-track{
+  display:flex;width:max-content;
+  animation:marquee 40s linear infinite;
+}
+.ticker-item{
+  font-family:var(--mono);font-size:10px;
+  color:var(--text3);white-space:nowrap;
+  padding:0 22px;letter-spacing:0.12em;
+  text-transform:uppercase;font-weight:300;
+}
+.tsep{color:rgba(167,139,250,0.3)}
+
+/* ── FOOTER ── */
+.footer{
+  padding:24px 52px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--border);
+  position:relative;z-index:1;
+}
+.footer-left{
+  font-family:var(--mono);font-size:11px;
+  color:var(--text3);letter-spacing:0.06em;font-weight:300;
+}
+.footer-right{
+  display:flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:11px;
+  color:var(--text2);letter-spacing:0.06em;
+}
+.avail-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--purple);
+  box-shadow:0 0 10px var(--purple);
+  animation:pulse-dot 2s ease-in-out infinite;
+}
+
+/* ── FADE UP ── */
+.fade-up{
+  opacity:0;transform:translateY(24px);
+  transition:opacity 0.65s ease,transform 0.65s ease;
+}
+.fade-up.visible{opacity:1;transform:none}
+
+@media(max-width:768px){
+  nav{padding:0 20px}
+  .hero{padding:100px 20px 0}
+  .hero-stats{grid-template-columns:repeat(2,1fr)}
+  .hero-stat{padding:20px 0}
+  .section{padding:60px 20px}
+  .proj-row{grid-template-columns:40px 1fr;padding:24px 12px}
+  .proj-row:hover{margin:0 -4px;padding:24px 16px}
+  .proj-arrow{display:none}
+  .exp-item{grid-template-columns:1fr;gap:12px}
+  .skills-grid{grid-template-columns:1fr 1fr}
+  .about-wrap{grid-template-columns:1fr;gap:40px}
+  .footer{padding:20px;flex-direction:column;gap:10px}
+}
+</style>
+</head>
+<body>
+
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Sinchana Praveen</a>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#experience">Experience</a>
+    <a class="nav-cta" href="mailto:spravee8@asu.edu">Contact ↗</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-main">
+    <div class="hero-pill">
+      <div class="hero-pill-dot"></div>
+      Available for opportunities · M.S. Data Science, ASU
+    </div>
+    <h1 class="hero-name">
+      Sinchana<br>
+      <span class="hero-name-italic">Praveen</span>
+    </h1>
+    <p class="hero-role">
+      <span class="hero-role-line"></span>
+      Data Analytics &nbsp;·&nbsp; Data Engineer &nbsp;·&nbsp; AI Researcher
+    </p>
+    <p class="hero-desc">Building intelligent systems at the intersection of analytics, engineering & AI : from satellite schedulers at ISRO to GenAI policy tools at ASU. Tempe, Arizona.</p>
+    <div class="hero-actions">
+      <a class="btn-glass btn-glass-purple" href="#work">View my work ↓</a>
+      <a class="btn-glass" href="https://github.com/SinchanaPraveen" target="_blank">GitHub ↗</a>
+      <a class="btn-glass" href="https://www.linkedin.com/in/sinchanapraveen" target="_blank">LinkedIn ↗</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="stat-num">3.56</div>
+      <div class="stat-lbl">GPA · Arizona State</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-num">50<em>%</em></div>
+      <div class="stat-lbl">Antenna delay cut · ISRO</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-num">168<em>K</em></div>
+      <div class="stat-lbl">Sessions simulated · A/B test</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-num">6<em>+</em></div>
+      <div class="stat-lbl">Projects shipped</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-fade-l"></div>
+  <div class="marquee-fade-r"></div>
+  <div class="marquee-track">
+    <span class="marquee-item lit">Python<span class="msep">✦</span></span>
+    <span class="marquee-item">Machine Learning<span class="msep">✦</span></span>
+    <span class="marquee-item lit">AWS Cloud<span class="msep">✦</span></span>
+    <span class="marquee-item">Generative AI<span class="msep">✦</span></span>
+    <span class="marquee-item lit">Apache Spark<span class="msep">✦</span></span>
+    <span class="marquee-item">LLM Agents<span class="msep">✦</span></span>
+    <span class="marquee-item">Deep Learning<span class="msep">✦</span></span>
+    <span class="marquee-item lit">SQL<span class="msep">✦</span></span>
+    <span class="marquee-item">Databricks<span class="msep">✦</span></span>
+    <span class="marquee-item lit">Model Context Protocol<span class="msep">✦</span></span>
+    <span class="marquee-item">Power BI<span class="msep">✦</span></span>
+    <span class="marquee-item">Tableau<span class="msep">✦</span></span>
+    <span class="marquee-item lit">Google Vertex AI<span class="msep">✦</span></span>
+    <span class="marquee-item">Python<span class="msep">✦</span></span>
+    <span class="marquee-item">Machine Learning<span class="msep">✦</span></span>
+    <span class="marquee-item lit">AWS Cloud<span class="msep">✦</span></span>
+    <span class="marquee-item">Generative AI<span class="msep">✦</span></span>
+    <span class="marquee-item lit">Apache Spark<span class="msep">✦</span></span>
+    <span class="marquee-item">LLM Agents<span class="msep">✦</span></span>
+    <span class="marquee-item">Deep Learning<span class="msep">✦</span></span>
+    <span class="marquee-item lit">SQL<span class="msep">✦</span></span>
+    <span class="marquee-item">Databricks<span class="msep">✦</span></span>
+    <span class="marquee-item lit">Model Context Protocol<span class="msep">✦</span></span>
+    <span class="marquee-item">Power BI<span class="msep">✦</span></span>
+    <span class="marquee-item">Tableau<span class="msep">✦</span></span>
+    <span class="marquee-item lit">Google Vertex AI<span class="msep">✦</span></span>
+  </div>
+</div>
+
+<!-- WORK -->
+<section class="section" id="work">
+  <div class="proj-list">
+
+    <a class="proj-row fade-up" href="https://github.com/SinchanaPraveen" target="_blank">
+      <div class="proj-num">01</div>
+      <div class="proj-body">
+        <div class="proj-title">ViperAI : MCP-Based LLM Research Assistant</div>
+        <div class="proj-desc">AI-powered terminal assistant connecting Claude API to local tools via Model Context Protocol. Automates research & data workflows, reads local files, adapts to diverse tasks without manual copy-paste.</div>
+        <div class="proj-tags">
+          <span class="tag tag-p">Claude API</span>
+          <span class="tag tag-p">MCP Protocol</span>
+          <span class="tag">GenAI Agents</span>
+          <span class="tag">Python</span>
+        </div>
+        <div class="proj-metric">↳ Flexible CLI architecture · Custom tool integration</div>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </a>
+
+    <div class="proj-row fade-up">
+      <div class="proj-num">02</div>
+      <div class="proj-body">
+        <div class="proj-title">Global Multi-Disaster Risk Prediction</div>
+        <div class="proj-desc">Spatio-temporal analytics pipeline combining satellite imagery, climate reanalysis data & historical disaster records. Foundation model embeddings quantify pre vs. post-disaster severity with geographic holdout validation.</div>
+        <div class="proj-tags">
+          <span class="tag tag-b">Deep Learning</span>
+          <span class="tag tag-b">Geospatial</span>
+          <span class="tag">Time Series</span>
+          <span class="tag">Remote Sensing</span>
+        </div>
+        <div class="proj-metric">↳ Wildfire & flood risk modelling · Temporal trajectory analysis</div>
+      </div>
+    </div>
+
+    <a class="proj-row fade-up" href="https://github.com/SinchanaPraveen" target="_blank">
+      <div class="proj-num">03</div>
+      <div class="proj-body">
+        <div class="proj-title">Adaptive A/B Testing Dashboard : B2B Analytics</div>
+        <div class="proj-desc">Public Streamlit dashboard evaluating analytics features via sequential A/B testing across ~168,000 simulated user sessions. End-to-end experimentation framework with statistical monitoring & segment-level analysis.</div>
+        <div class="proj-tags">
+          <span class="tag tag-p">Streamlit</span>
+          <span class="tag">Statistical Testing</span>
+          <span class="tag">Experimentation</span>
+          <span class="tag">Python</span>
+        </div>
+        <div class="proj-metric">↳ +1.2pp user action increase · ~35ms guardrail validated</div>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </a>
+
+    <a class="proj-row fade-up" href="https://github.com/SinchanaPraveen" target="_blank">
+      <div class="proj-num">04</div>
+      <div class="proj-body">
+        <div class="proj-title">CyberGuard : Data Breach Detection</div>
+        <div class="proj-desc">Rule-based threat-classification engine for real-time & batch network log analysis. 3-tier architecture (CLI, Flask API, data layer) with regex attack detection, multi-factor risk scoring, and auditable decision logic.</div>
+        <div class="proj-tags">
+          <span class="tag tag-b">Flask API</span>
+          <span class="tag">Cybersecurity</span>
+          <span class="tag">ML</span>
+          <span class="tag">SQLite</span>
+        </div>
+        <div class="proj-metric">↳ 1–2ms latency · 0% failure rate · 600 VU load-tested</div>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </a>
+
+    <a class="proj-row fade-up" href="https://github.com/SinchanaPraveen" target="_blank">
+      <div class="proj-num">05</div>
+      <div class="proj-body">
+        <div class="proj-title">Smart Health Forum : Medical Q&A Platform</div>
+        <div class="proj-desc">Medical chatbot using TF-IDF & KMeans to organise 50K+ health questions by topic. LLM integration increased context-aware accuracy 20%; satisfaction lifted from 3.8 → 4.6/5 across 2,000+ real-time queries.</div>
+        <div class="proj-tags">
+          <span class="tag tag-p">LLM</span>
+          <span class="tag">NLP · KMeans</span>
+          <span class="tag">Gradio</span>
+          <span class="tag">Python</span>
+        </div>
+        <div class="proj-metric">↳ 75%+ clustering accuracy · 99% uptime · 5,000+ users</div>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </a>
+
+    <div class="proj-row fade-up">
+      <div class="proj-num">06</div>
+      <div class="proj-body">
+        <div class="proj-title">GA-Based Satellite Scheduler : ISRO ISTRAC</div>
+        <div class="proj-desc">Genetic Algorithm scheduling system for 5 NAVIC satellites at ISRO's Satellite Control Centre. Optimised selection, crossover & mutation operators to generate conflict-free contact sequences under real-time constraints.</div>
+        <div class="proj-tags">
+          <span class="tag tag-b">Genetic Algorithms</span>
+          <span class="tag">Optimisation</span>
+          <span class="tag">Python</span>
+          <span class="tag">Operations Research</span>
+        </div>
+        <div class="proj-metric">↳ 50% delay reduction · 80% ranging improvement · 35% throughput gain</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section" id="experience">
+  <div class="section-kicker">Experience</div>
+  <h2 class="section-title">Where I've <em>contributed.</em></h2>
+  <div class="exp-list">
+
+    <div class="exp-item fade-up">
+      <div class="exp-left">
+        <div class="exp-period">Jan 2026<br>Present</div>
+        <div class="exp-badge">● Active now</div>
+      </div>
+      <div>
+        <div class="exp-role">AI Research Aide</div>
+        <div class="exp-company">Arizona State University · Phoenix, AZ</div>
+        <ul class="exp-bullets">
+          <li>Co-designed a GenAI-assisted prototype generating & evaluating urban climate policy memos with rubric-based assessment, addressing reliability gaps in LLM decision systems</li>
+          <li>Developed evaluation frameworks for factual grounding, policy alignment & contextual relevance of AI-generated outputs</li>
+          <li>Integrated LLM workflows with urban climate data to transform generative models into evidence-backed research tools</li>
+          <li>Contributing to responsible AI use in public-sector policy analysis under faculty mentorship</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item fade-up">
+      <div class="exp-left">
+        <div class="exp-period">Sep 2024<br>Dec 2025</div>
+      </div>
+      <div>
+        <div class="exp-role">Data Operations & Inventory Analyst</div>
+        <div class="exp-company">Aramark · Tempe, AZ</div>
+        <ul class="exp-bullets">
+          <li>Maintained product, pricing & stock-level data ensuring accurate real-time operational visibility</li>
+          <li>Performed inventory reconciliation & discrepancy analysis to support demand planning</li>
+          <li>Produced structured operational reports improving workflow efficiency in a high-volume retail environment</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item fade-up">
+      <div class="exp-left">
+        <div class="exp-period">Sep 2023<br>Dec 2023</div>
+      </div>
+      <div>
+        <div class="exp-role">Machine Learning Intern</div>
+        <div class="exp-company">ISRO – ISTRAC Facility (NAVIC Data Center) · Bangalore, India</div>
+        <ul class="exp-bullets">
+          <li>Built a GA-based satellite scheduling system for 5 satellites, cutting antenna slewing delays by 50%</li>
+          <li>Optimised GA operators (selection, crossover, mutation) to generate conflict-free contact schedules under real-time SCC constraints</li>
+          <li>Achieved 80% improvement in ranging cycle performance; increased scheduling throughput by ~35%</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section">
+  <div class="section-kicker">Skills</div>
+  <h2 class="section-title">The <em>toolkit.</em></h2>
+  <div class="skills-grid">
+    <div class="skill-glass fade-up">
+      <div class="skill-cat">Languages</div>
+      <div class="skill-items">
+        <span>Python</span><span>R</span><span>SQL</span><span>Git</span>
+      </div>
+    </div>
+    <div class="skill-glass fade-up">
+      <div class="skill-cat">ML & AI</div>
+      <div class="skill-items">
+        <span>LLMs & GenAI</span><span>Neural Networks</span><span>Random Forest</span><span>SVM · KNN · DBSCAN</span>
+      </div>
+    </div>
+    <div class="skill-glass fade-up">
+      <div class="skill-cat">Cloud & Big Data</div>
+      <div class="skill-items">
+        <span>AWS</span><span>Apache Spark</span><span>Databricks</span><span>Google Vertex AI</span>
+      </div>
+    </div>
+    <div class="skill-glass fade-up">
+      <div class="skill-cat">Visualisation</div>
+      <div class="skill-items">
+        <span>Power BI</span><span>Tableau</span><span>Streamlit</span><span>Gradio</span>
+      </div>
+    </div>
+    <div class="skill-glass fade-up">
+      <div class="skill-cat">Databases</div>
+      <div class="skill-items">
+        <span>MongoDB</span><span>MS SQL Server</span><span>SQLite</span><span>RStudio</span>
+      </div>
+    </div>
+    <div class="skill-glass fade-up">
+      <div class="skill-cat">Methods</div>
+      <div class="skill-items">
+        <span>ETL / ELT</span><span>A/B Testing</span><span>Time Series</span><span>Anomaly Detection</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTS -->
+<section class="section">
+  <div class="section-kicker">Certifications</div>
+  <h2 class="section-title">Verified <em>credentials.</em></h2>
+  <div class="certs-grid">
+    <a class="cert-glass fade-up" href="https://www.credly.com/badges/a90a2f3d-3f89-4839-aa8b-70c7f4288bb4" target="_blank">
+      <div class="cert-top"><div class="cert-icon">☁️</div><div class="cert-verify">Verify ↗</div></div>
+      <div class="cert-name">AWS Cloud Practitioner</div>
+      <div class="cert-issuer">Amazon Web Services · Credly</div>
+    </a>
+    <a class="cert-glass fade-up" href="https://verify.skilljar.com/c/hhojaof3ohfy" target="_blank">
+      <div class="cert-top"><div class="cert-icon">⚡</div><div class="cert-verify">Verify ↗</div></div>
+      <div class="cert-name">Introduction to Model Context Protocol</div>
+      <div class="cert-issuer">Anthropic · Skilljar</div>
+    </a>
+    <a class="cert-glass fade-up" href="https://www.coursera.org/account/accomplishments/verify/4R5Y64SRXB6U" target="_blank">
+      <div class="cert-top"><div class="cert-icon">🐍</div><div class="cert-verify">Verify ↗</div></div>
+      <div class="cert-name">Python for Data Science, AI & Development</div>
+      <div class="cert-issuer">IBM · Coursera</div>
+    </a>
+    <a class="cert-glass fade-up" href="https://credentials.databricks.com/fd0b73db-1cb7-4530-937a-c0a942e3801a#acc.zBPvtCA7" target="_blank">
+      <div class="cert-top"><div class="cert-icon">🔥</div><div class="cert-verify">Verify ↗</div></div>
+      <div class="cert-name">Generative AI Fundamentals</div>
+      <div class="cert-issuer">Databricks · Academy</div>
+    </a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="about-wrap">
+    <div>
+      <h2 class="about-headline">Hey, thanks<br>for exploring<br><em>my work!</em></h2>
+    </div>
+    <div class="about-right">
+      <p class="about-para">I'm Sinchana Praveen — a Data Science graduate student at Arizona State University (GPA 3.56, Academic Scholarship). I build analytical & intelligent systems where rigour meets real-world impact, from genetic algorithm satellite schedulers to LLM-powered climate policy tools.</p>
+      <p class="about-para">Currently open to full-time roles in Data Analytics, Data Engineering & AI Research. Open to relocation.</p>
+      <div class="about-contact-card">
+        <div class="about-contact-label">Get in touch</div>
+        <div class="about-contact-email">spravee8@asu.edu</div>
+        <div class="about-contact-rest">(480) 791-9116 · Tempe, AZ · Open to relocation</div>
+      </div>
+      <div class="about-links">
+        <a class="link-pill" href="https://www.linkedin.com/in/sinchanapraveen" target="_blank">LinkedIn ↗</a>
+        <a class="link-pill" href="https://github.com/SinchanaPraveen" target="_blank">GitHub ↗</a>
+        <a class="link-pill" href="mailto:spravee8@asu.edu">Email ↗</a>
+        <a class="link-pill" href="tel:+14807919116">Call ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="ticker-item">Open to opportunities <span class="tsep">✦</span></span>
+    <span class="ticker-item">Data Analytics <span class="tsep">✦</span></span>
+    <span class="ticker-item">Data Engineering <span class="tsep">✦</span></span>
+    <span class="ticker-item">AI Research <span class="tsep">✦</span></span>
+    <span class="ticker-item">Tempe AZ <span class="tsep">✦</span></span>
+    <span class="ticker-item">spravee8@asu.edu <span class="tsep">✦</span></span>
+    <span class="ticker-item">ASU M.S. Data Science <span class="tsep">✦</span></span>
+    <span class="ticker-item">Open to relocation <span class="tsep">✦</span></span>
+    <span class="ticker-item">Open to opportunities <span class="tsep">✦</span></span>
+    <span class="ticker-item">Data Analytics <span class="tsep">✦</span></span>
+    <span class="ticker-item">Data Engineering <span class="tsep">✦</span></span>
+    <span class="ticker-item">AI Research <span class="tsep">✦</span></span>
+    <span class="ticker-item">Tempe AZ <span class="tsep">✦</span></span>
+    <span class="ticker-item">spravee8@asu.edu <span class="tsep">✦</span></span>
+    <span class="ticker-item">ASU M.S. Data Science <span class="tsep">✦</span></span>
+    <span class="ticker-item">Open to relocation <span class="tsep">✦</span></span>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-left">Sinchana Praveen © 2026 · M.S. Data Science, ASU</div>
+  <div class="footer-right">
+    <div class="avail-dot"></div>
+    Available for opportunities
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
